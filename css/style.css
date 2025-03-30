@@ -37,7 +37,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(125deg, #8a2387, #e94057, #f27121);
+    background-image: linear-gradient(60deg, #3d3393 0%, #2b76b9 37%, #2cacd1 65%, #35eb93 100%);
     opacity: 0.8;
     z-index: -2;
 }
@@ -752,8 +752,9 @@ footer::before {
     }
     
     .avatar {
-        width: 80px;
-        height: 80px;
+        width: 110px;
+        height: 110px;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3), 0 0 20px rgba(173, 216, 230, 0.2), 0 4px 10px rgba(0, 0, 0, 0.2);
     }
     
     .heart {
@@ -856,7 +857,7 @@ footer::before {
     /* Vertical avatar layout */
     .avatars {
         flex-direction: column;
-        gap: 10px;
+        gap: 20px;
         margin: 20px 0;
     }
     
@@ -873,17 +874,10 @@ footer::before {
     }
     
     .avatar {
-        width: 70px;
-        height: 70px;
+        width: 90px;
+        height: 90px;
         border-width: 2px;
-    }
-    
-    .name-display {
-        font-size: 14px;
-        padding: 5px 10px;
-        margin-top: 10px;
-        width: 80%;
-        box-sizing: border-box;
+        box-shadow: 0 0 8px rgba(255, 255, 255, 0.3), 0 0 15px rgba(173, 216, 230, 0.2), 0 4px 8px rgba(0, 0, 0, 0.2);
     }
     
     footer p {
@@ -986,8 +980,8 @@ footer::before {
 }
 
 .avatar {
-    width: 100px;
-    height: 100px;
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
     overflow: hidden;
     margin: 0 auto;
@@ -1030,4 +1024,36 @@ footer::before {
 
 .avatar-upload input {
     display: none;
+}
+
+/* 名字显示 */
+.name-display {
+    font-size: 14px;
+    padding: 5px 10px;
+    margin-top: 10px;
+    width: 80%;
+    box-sizing: border-box;
+}
+
+/* Avatar glow effect */
+@keyframes avatarGlow {
+    0%, 100% {
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.3), 0 0 30px rgba(173, 216, 230, 0.2), 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(173, 216, 230, 0.4), 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3), 0 0 30px rgba(173, 216, 230, 0.2), 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    animation: float 5s ease-in-out infinite, avatarGlow 3s ease-in-out infinite;
 }
