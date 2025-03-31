@@ -567,18 +567,44 @@ footer::before {
 
 /* 名字显示 */
 .name-display {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
-    margin-top: 15px;
-    text-align: center;
     padding: 8px 15px;
+    margin-top: 15px;
+    width: fit-content;
+    box-sizing: border-box;
     border-radius: 20px;
     background: rgba(0, 0, 0, 0.3);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     color: white;
     border: 1px solid rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(5px);
-    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    animation: none;
+    transition: none;
+}
+
+.name-display::before {
+    display: none;
+}
+
+@keyframes pulse-soft {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    100% {
+        transform: scale(1.03);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+}
+
+.avatar-container:hover .name-display {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transform: none;
 }
 
 /* Days label */
@@ -757,50 +783,15 @@ footer::before {
         box-shadow: 0 0 10px rgba(255, 255, 255, 0.3), 0 0 20px rgba(173, 216, 230, 0.2), 0 4px 10px rgba(0, 0, 0, 0.2);
     }
     
-    .heart {
-        font-size: 1.5rem;
+    footer p {
+        font-size: 12px;
+        padding: 0 10px;
     }
     
-    .name-display {
-        font-size: 16px;
-        padding: 6px 12px;
-    }
-    
-    /* Fix bubble positioning for mobile */
     .bubble {
-        width: 100px;
-        height: 100px;
+        width: 80px;
+        height: 80px;
         opacity: 0.4; /* More transparent on mobile */
-    }
-    
-    .bubble-1 {
-        top: 10%;
-        left: 10%;
-    }
-    
-    .bubble-2 {
-        top: 20%;
-        right: 10%;
-    }
-    
-    .bubble-3 {
-        bottom: 30%;
-        left: 15%;
-    }
-    
-    .bubble-4 {
-        bottom: 20%;
-        right: 15%;
-    }
-    
-    .bubble-5 {
-        top: 40%;
-        left: 5%;
-    }
-    
-    .bubble-6 {
-        top: 60%;
-        right: 5%;
     }
 }
 
@@ -865,7 +856,10 @@ footer::before {
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 100%;
+        margin: 0 10px;
+        position: relative;
+        z-index: 1;
+        transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     
     /* Hide magic wand icon on mobile */
@@ -940,7 +934,7 @@ footer::before {
     background-clip: text;
     color: transparent;
     font-size: 2rem;
-    animation: heartbeat 1.5s ease infinite;
+    animation: heartbeat 1.5s infinite;
     display: inline-block;
     margin: 0 15px;
 }
@@ -977,6 +971,47 @@ footer::before {
     flex-direction: column;
     align-items: center;
     margin: 0 10px;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.avatar-container:hover {
+    transform: scale(1.05) translateY(-8px);
+}
+
+.avatar-container::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    right: -15px;
+    bottom: -15px;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.avatar-container:hover::before {
+    opacity: 1;
+    animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+}
+
+@keyframes pulse-ring {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.3;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.6;
+    }
+    100% {
+        transform: scale(0.8);
+        opacity: 0.3;
+    }
 }
 
 .avatar {
@@ -985,11 +1020,26 @@ footer::before {
     border-radius: 50%;
     overflow: hidden;
     margin: 0 auto;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    border: 3px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3), 0 0 30px rgba(173, 216, 230, 0.2), 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
-    animation: float 5s ease-in-out infinite;
+    animation: float-avatar 6s ease-in-out infinite, avatarGlow 3s ease-in-out infinite;
+}
+
+@keyframes float-avatar {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-10px) rotate(-2deg);
+    }
+    50% {
+        transform: translateY(0) rotate(0deg);
+    }
+    75% {
+        transform: translateY(-6px) rotate(2deg);
+    }
 }
 
 #avatar1 {
@@ -997,19 +1047,24 @@ footer::before {
 }
 
 #avatar2 {
-    animation-delay: 1s;
+    animation-delay: 1.5s;
 }
 
 .avatar:hover {
-    border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 255, 255, 0.4);
+    transform: scale(1.05) rotate(5deg);
 }
 
 .avatar img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: all 0.3s ease;
+    transition: all 0.5s ease;
+}
+
+.avatar:hover img {
+    transform: scale(1.1);
 }
 
 /* Remove avatar upload styling */
@@ -1028,11 +1083,44 @@ footer::before {
 
 /* 名字显示 */
 .name-display {
-    font-size: 14px;
-    padding: 5px 10px;
-    margin-top: 10px;
-    width: 80%;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 15px;
+    margin-top: 15px;
+    width: fit-content;
     box-sizing: border-box;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(5px);
+    position: relative;
+    overflow: hidden;
+    animation: none;
+    transition: none;
+}
+
+.name-display::before {
+    display: none;
+}
+
+@keyframes pulse-soft {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    100% {
+        transform: scale(1.03);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+}
+
+.avatar-container:hover .name-display {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transform: none;
 }
 
 /* Avatar glow effect */
@@ -1043,17 +1131,4 @@ footer::before {
     50% {
         box-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(173, 216, 230, 0.4), 0 4px 15px rgba(0, 0, 0, 0.2);
     }
-}
-
-.avatar {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin: 0 auto;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3), 0 0 30px rgba(173, 216, 230, 0.2), 0 4px 15px rgba(0, 0, 0, 0.2);
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    transition: all 0.3s ease;
-    position: relative;
-    animation: float 5s ease-in-out infinite, avatarGlow 3s ease-in-out infinite;
 }
